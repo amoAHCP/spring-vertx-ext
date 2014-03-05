@@ -1,0 +1,11 @@
+*.class
+
+# Package Files #
+*.war
+*.ear
+*.iml
+target
+.svn
+.idea
+*.log
+deploy.sh
