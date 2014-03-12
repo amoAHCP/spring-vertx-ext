@@ -34,40 +34,45 @@ public class SpringVerticleFactory implements VerticleFactory {
     public Verticle createVerticle(String main) throws Exception {
         if (container.logger() != null)
             container.logger().info("LOAD: " + main + " in THREAD: " + Thread.currentThread() + "  in Factory:" + this);
-        Class clazz;
-        try {
-            clazz = cl.loadClass(main);
-        } catch (ClassNotFoundException e) {
-            throw new ClassNotFoundException("Maybe you are trying to register a Spring-Verticle before the context is up?", e);
-        }
-        if (clazz.isAnnotationPresent(SpringVertx.class)) {
-            SpringVertx annotation = (SpringVertx) clazz.getAnnotation(SpringVertx.class);
-            final Class<?> springConfigClass = annotation.springConfig();
-            final GenericApplicationContext genericApplicationContext = new GenericApplicationContext();
-            genericApplicationContext.setClassLoader(cl);
+        final Class currentVerticleClass = cl.loadClass(main);
 
-            registerVertxBeans(genericApplicationContext.getBeanFactory());
-
-            genericApplicationContext.refresh();
-            genericApplicationContext.start();
-            // TODO remove all other Spring verticles from bean context to ensure that only one spring verticle is loaded per context
-            AnnotationConfigApplicationContext annotationConfigApplicationContext = createConfigContext(genericApplicationContext, springConfigClass);
-            annotationConfigApplicationContext.start();
-            annotationConfigApplicationContext.registerShutdownHook();
-
-            return (Verticle) annotationConfigApplicationContext.getBeanFactory().getBean(clazz);
-        } else {
-            // TODO init non spring verticle
+        if (currentVerticleClass.isAnnotationPresent(SpringVertx.class)) {
+            return createSpringVerticle(currentVerticleClass);
+        } else if (Verticle.class.isAssignableFrom(currentVerticleClass)) {
+            // init a non spring verticle, but this should not happen
+            final Verticle verticle = Verticle.class.cast(currentVerticleClass.newInstance());
+            verticle.setContainer(this.container);
+            verticle.setVertx(this.vertx);
+            return verticle;
         }
 
 
         return null;
     }
 
-    private AnnotationConfigApplicationContext createConfigContext(final GenericApplicationContext genericApplicationContext, final Class<?> springConfigClass) {
+    private Verticle createSpringVerticle(final Class currentVerticleClass) {
+        final SpringVertx annotation = (SpringVertx) currentVerticleClass.getAnnotation(SpringVertx.class);
+        final Class<?> springConfigClass = annotation.springConfig();
+        final GenericApplicationContext genericApplicationContext = new GenericApplicationContext();
+        genericApplicationContext.setClassLoader(cl);
+
+        registerVertxBeans(genericApplicationContext.getBeanFactory());
+
+        genericApplicationContext.refresh();
+        genericApplicationContext.start();
+
+        AnnotationConfigApplicationContext annotationConfigApplicationContext = createConfigContext(genericApplicationContext, springConfigClass,currentVerticleClass);
+        annotationConfigApplicationContext.start();
+        annotationConfigApplicationContext.registerShutdownHook();
+
+        return (Verticle) annotationConfigApplicationContext.getBeanFactory().getBean(currentVerticleClass);
+    }
+
+    private AnnotationConfigApplicationContext createConfigContext(final GenericApplicationContext genericApplicationContext, final Class<?> springConfigClass, final Class currentSpringVerticleClass) {
         AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext();
         annotationConfigApplicationContext.setParent(genericApplicationContext);
         annotationConfigApplicationContext.register(SpringContextConfiguration.class, springConfigClass);
+        annotationConfigApplicationContext.addBeanFactoryPostProcessor(new SpringSingleVerticleConfiguration(currentSpringVerticleClass));
         annotationConfigApplicationContext.getBeanFactory().addBeanPostProcessor(new SpringVerticleInitialisationPostProcessor(this.vertx, this.container));
         annotationConfigApplicationContext.refresh();
         return annotationConfigApplicationContext;

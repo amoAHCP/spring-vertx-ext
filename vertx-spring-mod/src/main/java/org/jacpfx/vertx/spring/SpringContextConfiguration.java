@@ -17,4 +17,5 @@ public class SpringContextConfiguration {
     public VertxLifecycleAspect vertxLifecycleAspect() {
         return new VertxLifecycleAspect();
     }
+
 }

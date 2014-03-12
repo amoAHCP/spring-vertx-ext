@@ -13,7 +13,7 @@ import java.util.Map;
  */
 @Component
 @SpringVertx(springConfig=TestConfiguration.class)
-public class SpringTestVerticle extends Verticle {
+public class SpringTestVerticle2 extends Verticle {
 
     @Autowired
     private SayHelloBean bean;
@@ -31,8 +31,8 @@ public class SpringTestVerticle extends Verticle {
                 req.response().putHeader("content-type", "text/plain");
                 req.response().end(sb.toString());
             }
-        }).listen(8072);
-       this.container.deployVerticle("spring:org.jacpfx.vertx.spring.SpringTestVerticle2");
+        }).listen(8073);
+        stop();
     }
 
     @Override

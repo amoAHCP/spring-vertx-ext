@@ -21,9 +21,9 @@ public class VertxLifecycleAspect {
     @After(value = "execution(* *.start(..))")
     public void afterStart(JoinPoint joinPoint) {
 
-        System.out.println("afterStart() is running!");
-        System.out.println("hijacked : " + joinPoint.getTarget());
-        System.out.println("******"+joinPoint.getSignature());
+     //   System.out.println("afterStart() is running!");
+     //   System.out.println("hijacked : " + joinPoint.getTarget());
+     //   System.out.println("******"+joinPoint.getSignature());
     }
 
     // TODO check if @SpringVertx  is available
