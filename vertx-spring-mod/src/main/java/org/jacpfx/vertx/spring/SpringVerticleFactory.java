@@ -50,7 +50,7 @@ public class SpringVerticleFactory implements VerticleFactory {
 
             genericApplicationContext.refresh();
             genericApplicationContext.start();
-
+            // TODO remove all other Spring verticles from bean context to ensure that only one spring verticle is loaded per context
             AnnotationConfigApplicationContext annotationConfigApplicationContext = createConfigContext(genericApplicationContext, springConfigClass);
             annotationConfigApplicationContext.start();
             annotationConfigApplicationContext.registerShutdownHook();

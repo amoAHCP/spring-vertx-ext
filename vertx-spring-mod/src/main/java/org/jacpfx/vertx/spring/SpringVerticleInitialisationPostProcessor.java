@@ -8,7 +8,8 @@ import org.vertx.java.platform.Container;
 import org.vertx.java.platform.Verticle;
 
 /**
- * Created by amo on 04.03.14.
+ * This spring bean postprocessor set the vertx and container reference to each spring verticle
+ * Created by Andy Moncsek on 04.03.14.
  */
 public class SpringVerticleInitialisationPostProcessor implements BeanPostProcessor {
 

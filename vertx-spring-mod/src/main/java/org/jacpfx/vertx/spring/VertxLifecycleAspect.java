@@ -21,7 +21,7 @@ public class VertxLifecycleAspect {
     @After(value = "execution(* *.start(..))")
     public void afterStart(JoinPoint joinPoint) {
 
-        System.out.println("afterStart() is running!"+ context.getParent());
+        System.out.println("afterStart() is running!");
         System.out.println("hijacked : " + joinPoint.getTarget());
         System.out.println("******"+joinPoint.getSignature());
     }
