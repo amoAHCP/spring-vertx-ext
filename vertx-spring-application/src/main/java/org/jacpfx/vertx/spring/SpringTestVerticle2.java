@@ -12,7 +12,7 @@ import java.util.Map;
  * Created by amo on 04.03.14.
  */
 @Component
-@SpringVertx(springConfig=TestConfiguration.class)
+@SpringVerticle(springConfig=TestConfiguration.class)
 public class SpringTestVerticle2 extends Verticle {
 
     @Autowired
@@ -21,7 +21,7 @@ public class SpringTestVerticle2 extends Verticle {
     @Override
     public void start() {
         getContainer();
-        System.out.println("START SpringVerticle: "+bean.sayHello()+"  THREAD: "+Thread.currentThread()+"  this:"+this);
+        System.out.println("START SpringVerticle2: "+bean.sayHello()+"  THREAD: "+Thread.currentThread()+"  this:"+this);
         vertx.createHttpServer().requestHandler(new Handler<HttpServerRequest>() {
             public void handle(HttpServerRequest req) {
                 StringBuilder sb = new StringBuilder();

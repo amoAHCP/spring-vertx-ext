@@ -11,11 +11,11 @@ import java.util.Map;
  */
 
 
-public class HttpVerticle {//extends Verticle {
+public class HttpVerticle  extends Verticle {
 
-/*    @Override
+   @Override
     public void start() {
-        System.out.println("START VERTICLE" +"  THREAD: "+Thread.currentThread());
+        System.out.println("START HTTP VERTICLE" +"  THREAD: "+Thread.currentThread());
         vertx.createHttpServer().requestHandler(new Handler<HttpServerRequest>() {
             public void handle(HttpServerRequest req) {
                 StringBuilder sb = new StringBuilder();
@@ -26,5 +26,5 @@ public class HttpVerticle {//extends Verticle {
                 req.response().end(sb.toString());
             }
         }).listen(8071);
-    }*/
+    }
 }

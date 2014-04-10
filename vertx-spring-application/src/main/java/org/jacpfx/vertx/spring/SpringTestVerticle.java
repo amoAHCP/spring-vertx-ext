@@ -12,7 +12,7 @@ import java.util.Map;
  * Created by amo on 04.03.14.
  */
 @Component
-@SpringVertx(springConfig=TestConfiguration.class)
+@SpringVerticle(springConfig=TestConfiguration.class)
 public class SpringTestVerticle extends Verticle {
 
     @Autowired
@@ -33,6 +33,7 @@ public class SpringTestVerticle extends Verticle {
             }
         }).listen(8072);
        this.container.deployVerticle("spring:org.jacpfx.vertx.spring.SpringTestVerticle2");
+        this.container.deployVerticle("org.jacpfx.vertx.spring.HttpVerticle");
     }
 
     @Override
