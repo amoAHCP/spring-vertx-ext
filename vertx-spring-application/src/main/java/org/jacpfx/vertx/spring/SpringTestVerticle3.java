@@ -14,7 +14,7 @@ import java.util.Map;
  */
 @Component
 @SpringVerticle(springConfig=TestConfiguration.class)
-public class SpringTestVerticle extends Verticle {
+public class SpringTestVerticle3 extends Verticle {
 
     @Inject
     private SayHelloBean bean;
@@ -22,7 +22,7 @@ public class SpringTestVerticle extends Verticle {
     @Override
     public void start() {
         getContainer();
-        System.out.println("START SpringVerticle: "+bean.sayHello()+"  THREAD: "+Thread.currentThread()+"  this:"+this);
+        System.out.println("START SpringVerticle3: "+bean.sayHello()+"  THREAD: "+Thread.currentThread()+"  this:"+this);
         vertx.createHttpServer().requestHandler(new Handler<HttpServerRequest>() {
             public void handle(HttpServerRequest req) {
                 StringBuilder sb = new StringBuilder();
@@ -32,9 +32,7 @@ public class SpringTestVerticle extends Verticle {
                 req.response().putHeader("content-type", "text/plain");
                 req.response().end(sb.toString());
             }
-        }).listen(8072);
-       this.container.deployVerticle("spring:org.jacpfx.vertx.spring.SpringTestVerticle2");
-        this.container.deployVerticle("org.jacpfx.vertx.spring.SimpleVerticle");
+        }).listen(8099);
     }
 
     @Override

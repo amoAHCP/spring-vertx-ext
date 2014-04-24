@@ -6,8 +6,29 @@
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>vertx-spring-mod</name>
-    <url>http://maven.apache.org</url>
-
+    <url>https://github.com/amoAHCP/spring-vertx-mod</url>
+    <description>
+        This vertx module adds spring capabilities by annotating an Vertx class with @SpringVerticle.
+    </description>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <id>amo</id>
+            <name>Andy Moncsek</name>
+            <email>amo.ahcp@gmail.com</email>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:git@github.com:amoAHCP/spring-vertx-mod.git</connection>
+        <developerConnection>scm:git:git@github.com:amoAHCP/spring-vertx-mod.git</developerConnection>
+        <url>git@github.com:amoAHCP/spring-vertx-mod.git</url>
+    </scm>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>4.0.3.RELEASE</spring.version>
@@ -213,6 +234,87 @@
                     <target>1.7</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <!-- create source jar -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>${artifactId}-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <failOnError>false</failOnError>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.7.2</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.3.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>2.9.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>1.4</version>
+                    <configuration>
+                        <skip>false</skip>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
+    <distributionManagement>
+        <repository>
+            <id>sonatype-nexus-staging</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+        <snapshotRepository>
+            <id>sonatype-nexus-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>

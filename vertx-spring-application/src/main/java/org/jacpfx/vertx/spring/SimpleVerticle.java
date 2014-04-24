@@ -7,11 +7,11 @@ import org.vertx.java.platform.Verticle;
 import java.util.Map;
 
 /**
- * @author Jochen Mader
+ * @author Andy Moncsek
  */
 
 
-public class HttpVerticle  extends Verticle {
+public class SimpleVerticle extends Verticle {
 
    @Override
     public void start() {

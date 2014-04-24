@@ -6,6 +6,7 @@ import org.vertx.java.core.Handler;
 import org.vertx.java.core.http.HttpServerRequest;
 import org.vertx.java.platform.Verticle;
 
+import javax.inject.Inject;
 import java.util.Map;
 
 /**
@@ -15,7 +16,7 @@ import java.util.Map;
 @SpringVerticle(springConfig=TestConfiguration.class)
 public class SpringTestVerticle2 extends Verticle {
 
-    @Autowired
+    @Inject
     private SayHelloBean bean;
 
     @Override
@@ -32,7 +33,6 @@ public class SpringTestVerticle2 extends Verticle {
                 req.response().end(sb.toString());
             }
         }).listen(8073);
-        stop();
     }
 
     @Override

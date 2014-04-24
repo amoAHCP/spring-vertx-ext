@@ -5,15 +5,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author Jochen Mader
+ * @author Andy Moncsek
  */
 @Configuration
 @ComponentScan
 public class TestConfiguration {
 
-    @Bean
-    public HttpVerticle httpVerticle() {
-        return new HttpVerticle();
-    }
 
 }
