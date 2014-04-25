@@ -6,13 +6,13 @@ A spring vertx module which creates spring aware verticles. This module starts f
 
 ##Usage:##
 Add the spring-vertx-mod dependency to your project, in case of maven like this:
-<pre>
+```xml
         <dependency>
             <groupId>org.jacpfx.vertx.spring</groupId>
             <artifactId>vertx-spring-mod</artifactId>
             <version>1.0</version>
         </dependency>
-</pre>
+```
 > Note: currently only the snapshot is on maven central. Simply execute mvn clean install in the vertx-spring-mod project to add the dependency to your local repository.
 
 To make a verticle spring aware you first need a (Java) Spring configuration class like this:
