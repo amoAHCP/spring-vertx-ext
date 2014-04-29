@@ -54,3 +54,18 @@ In case of using a spring-verticle as the initial verticle of your module, add t
 "main":"spring:org.jacpfx.vertx.spring.SpringTestVerticle"
 </pre>
 ### start on command line ###
+To run a spring verticle from command line or from Eclipse/Netbeans/Idea set the following VM Parameter:
+<pre>
+-Dvertx.langs.spring=org.jacpfx.vertx.spring~vertx-spring-mod~1.0-SNAPSHOT:org.jacpfx.vertx.spring.SpringVerticleFactory
+</pre>
+To run the verticle use:
+<pre>
+vertx run spring:org.jacpfx.vertx.spring.SpringTestVerticle
+</pre>
+###Hint for Idea users (should be similar with eclipse/netbeans)###
+####Main class:####
+<pre>org.vertx.java.platform.impl.cli.Starter</pre>
+#### VM Options ####
+<pre>-Dvertx.langs.spring=org.jacpfx.vertx.spring~vertx-spring-mod~1.0-SNAPSHOT:org.jacpfx.vertx.spring.SpringVerticleFactory</pre>
+#### Programm arguments ####
+<pre>run spring:org.jacpfx.vertx.spring.SpringTestVerticle</pre>
