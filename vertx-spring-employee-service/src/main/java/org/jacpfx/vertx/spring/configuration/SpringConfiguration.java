@@ -7,6 +7,6 @@ import org.springframework.context.annotation.Configuration;
  * Created by amo on 26.09.14.
  */
 @Configuration
-@ComponentScan(basePackages = {"org.jacpfx.vertx.spring.ws","org.jacpfx.vertx.spring.rest","org.jacpfx.vertx.spring.services","org.jacpfx.vertx.spring.repository"})
+@ComponentScan(basePackages = {"org.jacpfx.vertx.spring.services","org.jacpfx.vertx.spring.repository"})
 public class SpringConfiguration {
 }

@@ -1,6 +1,7 @@
 package org.jacpfx.vertx.spring;
 
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.vertx.java.core.Handler;
 import org.vertx.java.core.Vertx;
@@ -65,6 +66,7 @@ public class WSEntryVerticleTest {
     }
 
     @Test
+    @Ignore
     public void getSimpleConnection() throws InterruptedException, IOException {
         CountDownLatch latch = new CountDownLatch(1);
         CountDownLatch latch2 = new CountDownLatch(1);

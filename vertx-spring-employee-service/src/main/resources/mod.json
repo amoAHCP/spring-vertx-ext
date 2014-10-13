@@ -1,6 +1,6 @@
 {
 
-  "main":"spring:org.jacpfx.vertx.spring.rest.RestEntryVerticle",
+  "main":"org.jacpfx.vertx.spring.ws.WSEntryVerticle",
   "worker": false,
   "description":"A Vert.x / Spring 4 demo application",
   "licenses": ["The Apache Software License Version 2.0"],

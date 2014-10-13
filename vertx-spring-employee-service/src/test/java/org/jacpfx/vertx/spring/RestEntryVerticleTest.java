@@ -1,7 +1,5 @@
 package org.jacpfx.vertx.spring;
 
-import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.vertx.java.core.Handler;
 import org.vertx.java.core.Vertx;
@@ -28,7 +26,7 @@ public class RestEntryVerticleTest {
 
     private ExecutorService executor = Executors.newCachedThreadPool();
     static final PlatformManager pm = PlatformLocator.factory.createPlatformManager();
-    @BeforeClass
+   // @BeforeClass
     public static void onStart() throws MalformedURLException, InterruptedException {
         // if server was started manually, uncomment this:
         connect(10);
@@ -64,8 +62,6 @@ public class RestEntryVerticleTest {
     }
 
     @Test
-    @Ignore
-
     public void getSimpleConnection() throws InterruptedException, IOException {
         CountDownLatch latch = new CountDownLatch(1);
         CountDownLatch latch2 = new CountDownLatch(1);

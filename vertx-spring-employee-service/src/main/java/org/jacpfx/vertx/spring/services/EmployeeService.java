@@ -1,11 +1,15 @@
 package org.jacpfx.vertx.spring.services;
 
+import com.google.gson.Gson;
 import org.jacpfx.vertx.spring.SpringVerticle;
 import org.jacpfx.vertx.spring.configuration.SpringConfiguration;
+import org.jacpfx.vertx.spring.repository.EmployeeRepository;
 import org.springframework.stereotype.Component;
 import org.vertx.java.core.eventbus.Message;
 import org.vertx.java.core.logging.Logger;
 import org.vertx.java.platform.Verticle;
+
+import javax.inject.Inject;
 
 
 /**
@@ -15,6 +19,9 @@ import org.vertx.java.platform.Verticle;
 @SpringVerticle(springConfig = SpringConfiguration.class)
 public class EmployeeService extends Verticle {
 
+    @Inject
+    private EmployeeRepository repository;
+
     @Override
     public void start() {
        vertx.eventBus().registerHandler("/employee",this::handleMessage);
@@ -23,12 +30,8 @@ public class EmployeeService extends Verticle {
 
     private void handleMessage(Message m) {
         Logger logger = container.logger();
-        logger.info("message employee"+m.body());
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        m.reply("hello world");
+        Gson gson = new Gson();
+        m.reply(gson.toJson(repository.getAllEmployees()));
+        logger.info("reply to: "+m.body());
     }
 }

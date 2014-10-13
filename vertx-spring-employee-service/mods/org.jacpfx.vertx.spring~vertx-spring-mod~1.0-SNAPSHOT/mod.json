@@ -1,0 +1,8 @@
+{
+
+  "system":true,
+  "resident":true,
+  "description":"Integration of Spring framework",
+  "licenses": ["The Apache Software License Version 2.0"],
+  "author": "Andy Moncsek"
+}
