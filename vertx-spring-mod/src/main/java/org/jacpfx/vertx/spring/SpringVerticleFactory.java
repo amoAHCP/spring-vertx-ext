@@ -49,7 +49,7 @@ public class SpringVerticleFactory implements VerticleFactory {
     }
 
     @Override
-    public Verticle createVerticle(String main) throws Exception {
+    public synchronized Verticle createVerticle(String main) throws Exception {
         if (container.logger() != null)
             container.logger().info("LOAD: " + main + " in THREAD: " + Thread.currentThread() + "  in Factory:" + this);
         final Class currentVerticleClass = cl.loadClass(main);
