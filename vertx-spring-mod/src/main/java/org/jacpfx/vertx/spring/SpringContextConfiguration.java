@@ -21,7 +21,6 @@
 package org.jacpfx.vertx.spring;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
@@ -37,5 +36,6 @@ public class SpringContextConfiguration {
     public VertxLifecycleAspect vertxLifecycleAspect() {
         return new VertxLifecycleAspect();
     }
+
 
 }

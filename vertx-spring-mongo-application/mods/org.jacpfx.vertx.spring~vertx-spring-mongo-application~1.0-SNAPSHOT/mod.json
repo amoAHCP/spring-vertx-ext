@@ -1,0 +1,9 @@
+{
+
+  "main":"spring:org.jacpfx.vertx.spring.rest.RestEntryVerticle",
+  "worker": false,
+  "description":"A Vert.x / Spring 4 demo application",
+  "licenses": ["The Apache Software License Version 2.0"],
+  "author": "Andy Moncsek",
+    "includes": "org.jacpfx.vertx.spring~vertx-spring-mod~1.0-SNAPSHOT"
+}

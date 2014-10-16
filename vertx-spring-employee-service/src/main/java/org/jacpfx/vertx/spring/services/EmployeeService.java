@@ -22,16 +22,18 @@ public class EmployeeService extends Verticle {
     @Inject
     private EmployeeRepository repository;
 
+    private final Gson gson = new Gson();
+
     @Override
     public void start() {
-       vertx.eventBus().registerHandler("/employee",this::handleMessage);
+        vertx.eventBus().registerHandler("/employee", this::handleMessage);
     }
 
 
     private void handleMessage(Message m) {
         Logger logger = container.logger();
-        Gson gson = new Gson();
+
         m.reply(gson.toJson(repository.getAllEmployees()));
-        logger.info("reply to: "+m.body());
+        logger.info("reply to: " + m.body());
     }
 }

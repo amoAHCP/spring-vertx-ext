@@ -151,6 +151,22 @@
                             </resources>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>copy-mod-to-platform_lib</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <overwrite>true</overwrite>
+                            <outputDirectory>${mods.directory}/${module.name}/platform_lib</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/platform_lib</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>

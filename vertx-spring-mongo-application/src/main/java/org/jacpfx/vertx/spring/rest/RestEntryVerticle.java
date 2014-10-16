@@ -2,6 +2,8 @@ package org.jacpfx.vertx.spring.rest;
 
 import org.jacpfx.vertx.spring.SpringVerticle;
 import org.jacpfx.vertx.spring.configuration.SpringConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.vertx.java.core.AsyncResult;
 import org.vertx.java.core.Handler;
@@ -15,11 +17,12 @@ import org.vertx.java.platform.Verticle;
 @Component(value = "RestEntryVerticle")
 @SpringVerticle(springConfig = SpringConfiguration.class)
 public class RestEntryVerticle extends Verticle {
-
+    @Autowired
+    private ApplicationContext applicationContext;
 
     @Override
     public void start() {
-        System.out.println("START RestEntryVerticle  THREAD: " + Thread.currentThread() + "  this:" + this);
+        System.out.println("START RestEntryVerticle  THREAD: " + Thread.currentThread() + "  this:" + this+"   " +applicationContext);
         //container.deployWorkerVerticle("spring:org.jacpfx.vertx.spring.services.EmployeeService",10);
         HttpServer server = vertx.createHttpServer();
         server.requestHandler(handler -> {

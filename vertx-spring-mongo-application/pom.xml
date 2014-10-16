@@ -17,6 +17,7 @@
         <maven.failsafe.plugin.version>2.14</maven.failsafe.plugin.version>
         <maven.dependency.plugin.version>2.7</maven.dependency.plugin.version>
         <vertx.version>2.1.2</vertx.version>
+        <vertx.home>/Users/amo/Documents/development/servers/vert.x-2.1.2</vertx.home>
     </properties>
 
     <dependencies>
@@ -119,6 +120,11 @@
                         <artifactId>vertx-core</artifactId>
                         <version>${vertx.version}</version>
                     </dependency>
+                    <dependency>
+                        <groupId>org.jacpfx.vertx.spring</groupId>
+                        <artifactId>vertx-spring-mod</artifactId>
+                        <version>1.0-SNAPSHOT</version>
+                    </dependency>
                 </dependencies>
                 <executions>
                     <execution>
@@ -150,8 +156,25 @@
                             </resources>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>copy-mod-to-platform_lib</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <overwrite>true</overwrite>
+                            <outputDirectory>${mods.directory}/${module.name}/platform_lib</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/platform_lib</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -219,6 +242,28 @@
                         <goals>
                             <goal>single</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <id>package-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>${vertx.home}/bin/vertx</executable>
+                            <workingDirectory>${project.build.directory}</workingDirectory>
+                            <arguments>
+                                <argument>fatjar</argument>
+                                <argument>${groupId}~${artifactId}~${version}</argument>
+                            </arguments>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

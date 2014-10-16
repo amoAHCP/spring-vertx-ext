@@ -52,6 +52,8 @@ public class SpringVerticleFactory implements VerticleFactory {
     public synchronized Verticle createVerticle(String main) throws Exception {
         if (container.logger() != null)
             container.logger().info("LOAD: " + main + " in THREAD: " + Thread.currentThread() + "  in Factory:" + this);
+        System.out.println("LOAD: " + main + " in THREAD: " + Thread.currentThread() + "  in Factory:" + this);
+
         final Class currentVerticleClass = cl.loadClass(main);
 
         if (currentVerticleClass.isAnnotationPresent(SpringVerticle.class)) {

@@ -28,12 +28,16 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 
+import java.util.logging.Logger;
+
 /**
  * This aspect closes the spring context in case the spring verticle is stopped
  * Created by Andy Moncsek on 05.03.14.
  */
 @Aspect
 public class VertxLifecycleAspect {
+
+    private static Logger LOG = Logger.getLogger(VertxLifecycleAspect.class.getName());
 
     @Autowired
     public ApplicationContext context;
@@ -44,9 +48,10 @@ public class VertxLifecycleAspect {
      * In this case check if there is a running spring context, if so close it.
      * @param joinPoint the verticle stop method
      */
-    @After(value = "execution(* *.stop(..))")
+    @After(value = "execution(* org.vertx.java.platform.Verticle+.stop())")
     public void afterStop(JoinPoint joinPoint) {
         final Object target = joinPoint.getTarget();
+        LOG.info("STOP spring verticle");
         if (target.getClass().isAnnotationPresent(SpringVerticle.class)) {
             if (AnnotationConfigApplicationContext.class.isAssignableFrom(context.getClass())) {
                 final ApplicationContext parent = AnnotationConfigApplicationContext.class.cast(context).getParent();
@@ -59,6 +64,12 @@ public class VertxLifecycleAspect {
                 }
             }
         }
+
+    }
+
+    @After(value = "execution(* org.vertx.java.platform.Verticle+.start(..))")
+    public void afterStart(JoinPoint joinPoint) {
+        LOG.info("START spring verticle");
 
     }
 }
