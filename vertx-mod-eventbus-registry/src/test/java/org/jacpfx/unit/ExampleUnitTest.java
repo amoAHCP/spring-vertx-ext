@@ -1,6 +1,5 @@
 package org.jacpfx.unit;
 
-import org.jacpfx.PingVerticle;
 import org.junit.Test;
 
 /*
