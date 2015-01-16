@@ -1,46 +1,41 @@
 package org.jacpfx.vertx.spring;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.vertx.java.core.Handler;
-import org.vertx.java.core.http.HttpServerRequest;
-import org.vertx.java.platform.Verticle;
+import io.vertx.core.AbstractVerticle;
+import io.vertx.core.http.HttpServerOptions;
+
+import java.util.Map;
 
 import javax.inject.Inject;
-import java.util.Map;
+
+import org.springframework.stereotype.Component;
 
 /**
  * Created by amo on 04.03.14.
  */
 @Component
-@SpringVerticle(springConfig=TestConfiguration.class)
-public class SpringTestVerticle extends Verticle {
+@SpringVerticle(springConfig = TestConfiguration.class)
+public class SpringTestVerticle extends AbstractVerticle {
 
-    @Inject
-    private SayHelloBean bean;
+	@Inject
+	private SayHelloBean bean;
 
-    @Override
-    public void start() {
-        getContainer();
-        System.out.println("START SpringVerticle: "+bean.sayHello()+"  THREAD: "+Thread.currentThread()+"  this:"+this);
-        vertx.createHttpServer().requestHandler(new Handler<HttpServerRequest>() {
-            public void handle(HttpServerRequest req) {
-                StringBuilder sb = new StringBuilder();
-                for (Map.Entry<String, String> header : req.headers().entries()) {
-                    sb.append(header.getKey()).append(": ").append(header.getValue()).append("\n").append(bean.sayHello());
-                }
-                req.response().putHeader("content-type", "text/plain");
-                req.response().end(sb.toString());
-            }
-        }).listen(8072);
-       this.container.deployVerticle("spring:org.jacpfx.vertx.spring.SpringTestVerticle2");
-        this.container.deployVerticle("org.jacpfx.vertx.spring.SimpleVerticle");
-    }
+	@Override
+	public void start() {
+		System.out.println("START SpringVerticle: " + bean.sayHello() + "  THREAD: " + Thread.currentThread() + "  this:" + this);
+		vertx.createHttpServer(new HttpServerOptions().setPort(8072)).requestHandler(rc -> {
+			StringBuilder sb = new StringBuilder();
+			for (Map.Entry<String, String> header : rc.headers().entries()) {
+				sb.append(header.getKey()).append(": ").append(header.getValue()).append("\n").append(bean.sayHello());
+			}
+			rc.response().putHeader("content-type", "text/plain");
+			rc.response().end(sb.toString());
+		}).listen();
+		vertx.deployVerticle("spring:org.jacpfx.vertx.spring.SpringTestVerticle2");
+		vertx.deployVerticle("org.jacpfx.vertx.spring.SimpleVerticle");
+	}
 
-    @Override
-    public void stop() {
-       // System.out.println("STOP");
-    }
+	@Override
+	public void stop() {
+		// System.out.println("STOP");
+	}
 }
-
-

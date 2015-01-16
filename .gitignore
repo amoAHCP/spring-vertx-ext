@@ -9,3 +9,6 @@ target
 .idea
 *.log
 deploy.sh
+.classpath
+.project
+.settings
