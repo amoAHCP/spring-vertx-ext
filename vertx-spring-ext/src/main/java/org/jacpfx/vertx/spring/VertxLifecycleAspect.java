@@ -20,6 +20,9 @@
  */
 package org.jacpfx.vertx.spring;
 
+import io.vertx.core.logging.Logger;
+import io.vertx.core.logging.impl.LoggerFactory;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -28,7 +31,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 
-import java.util.logging.Logger;
 
 /**
  * This aspect closes the spring context in case the spring verticle is stopped
@@ -36,7 +38,7 @@ import java.util.logging.Logger;
 @Aspect
 public class VertxLifecycleAspect {
 
-    private static Logger LOG = Logger.getLogger(VertxLifecycleAspect.class.getName());
+	private static final Logger log = LoggerFactory.getLogger(VertxLifecycleAspect.class);
 
     @Autowired
     public ApplicationContext context;
@@ -49,7 +51,7 @@ public class VertxLifecycleAspect {
     @After(value = "execution(* io.vertx.core.Verticle+.stop())")
     public void afterStop(JoinPoint joinPoint) {
         final Object target = joinPoint.getTarget();
-        LOG.info("STOP spring verticle");
+        log.debug("Stop invoked - Terminating spring context for verticle");
         if (target.getClass().isAnnotationPresent(SpringVerticle.class)) {
             if (AnnotationConfigApplicationContext.class.isAssignableFrom(context.getClass())) {
                 final ApplicationContext parent = AnnotationConfigApplicationContext.class.cast(context).getParent();
@@ -67,6 +69,6 @@ public class VertxLifecycleAspect {
 
     @After(value = "execution(* io.vertx.core.Verticle+.start(..))")
     public void afterStart(JoinPoint joinPoint) {
-        LOG.info("START spring verticle");
+        log.debug("START spring verticle");
     }
 }
