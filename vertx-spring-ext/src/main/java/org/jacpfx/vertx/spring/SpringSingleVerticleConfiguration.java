@@ -35,9 +35,9 @@ import java.util.List;
  * Created by Andy Moncsek on 12.03.14.
  */
 public class SpringSingleVerticleConfiguration implements BeanFactoryPostProcessor {
-    private final Class currentSpringVerticleClass;
+    private final Class<?> currentSpringVerticleClass;
 
-    public SpringSingleVerticleConfiguration(final Class currentSpringVerticleClass) {
+    public SpringSingleVerticleConfiguration(final Class<?> currentSpringVerticleClass) {
         this.currentSpringVerticleClass = currentSpringVerticleClass;
     }
 

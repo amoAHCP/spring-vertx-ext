@@ -26,6 +26,7 @@ import io.vertx.core.Vertx;
 import io.vertx.core.impl.verticle.CompilingClassLoader;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.spi.VerticleFactory;
+
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 
@@ -37,6 +38,8 @@ public class SpringVerticleFactory implements VerticleFactory {
     private Vertx vertx;
 
     public static final String PREFIX = "java-spring";
+
+    private static GenericApplicationContext parentContext = null;
 
     @Override
     public String prefix() {
@@ -83,12 +86,15 @@ public class SpringVerticleFactory implements VerticleFactory {
     }
 
     private Verticle createSpringVerticle(final Class<?> currentVerticleClass, ClassLoader classLoader) {
-        final SpringVerticle annotation = currentVerticleClass.getAnnotation(SpringVerticle.class);
+        final SpringVerticle annotation = (SpringVerticle) currentVerticleClass.getAnnotation(SpringVerticle.class);
         final Class<?> springConfigClass = annotation.springConfig();
         
         // Create the parent context  
         final GenericApplicationContext genericApplicationContext = new GenericApplicationContext();
         genericApplicationContext.setClassLoader(classLoader);
+        if (parentContext != null) {
+            genericApplicationContext.setParent(parentContext);
+        }
         genericApplicationContext.refresh();
         genericApplicationContext.start();
 
@@ -115,5 +121,9 @@ public class SpringVerticleFactory implements VerticleFactory {
     }
 
     public void close() {
+    }
+
+    public static void setParentContext(GenericApplicationContext ctx) {
+        parentContext = ctx;
     }
 }

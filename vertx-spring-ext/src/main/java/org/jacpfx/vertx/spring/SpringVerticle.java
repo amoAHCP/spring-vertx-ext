@@ -37,7 +37,7 @@ public @interface SpringVerticle {
      * Defines the Spring Configuration class for the Spring Verticle
      * @return a Spring configuration class
      */
-    public Class<?> springConfig();
+    public Class<?> springConfig() default Object.class;
 
     /**
      *  Defines if other Spring verticles in the same spring context will be removed.

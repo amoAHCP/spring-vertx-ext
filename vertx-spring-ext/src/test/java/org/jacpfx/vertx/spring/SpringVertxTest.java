@@ -26,7 +26,7 @@ public class SpringVertxTest extends VertxTestBase {
         vertx.deployVerticle("java-spring:" + SpringTestVerticle.class.getCanonicalName(), ch -> {
             assertTrue(ch.succeeded());
             assertNotNull(ch.result());
-            vertx.undeployVerticle(ch.result(), chu -> {
+            vertx.undeploy(ch.result(), chu -> {
                 assertTrue(chu.succeeded());
                 testComplete();
             });
