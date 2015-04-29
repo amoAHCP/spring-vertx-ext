@@ -23,12 +23,9 @@ package org.jacpfx.vertx.spring;
 
 import io.vertx.core.Verticle;
 import io.vertx.core.Vertx;
-import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.impl.verticle.CompilingClassLoader;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.spi.VerticleFactory;
-
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 
@@ -86,7 +83,7 @@ public class SpringVerticleFactory implements VerticleFactory {
     }
 
     private Verticle createSpringVerticle(final Class<?> currentVerticleClass, ClassLoader classLoader) {
-        final SpringVerticle annotation = (SpringVerticle) currentVerticleClass.getAnnotation(SpringVerticle.class);
+        final SpringVerticle annotation = currentVerticleClass.getAnnotation(SpringVerticle.class);
         final Class<?> springConfigClass = annotation.springConfig();
         
         // Create the parent context  
