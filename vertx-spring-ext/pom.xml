@@ -4,11 +4,11 @@
     <groupId>org.jacpfx.vertx.spring</groupId>
     <artifactId>vertx-spring-ext</artifactId>
     <packaging>jar</packaging>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>2.0.0</version>
     <name>vertx-spring-ext</name>
     <url>https://github.com/amoAHCP/spring-vertx</url>
     <description>
-        This vertx extension adds spring capabilities by annotating an Vertx class with @SpringVerticle.
+        This vertx extension adds spring capabilities by annotating an Vertx class (verticle) with @SpringVerticle.
     </description>
     <licenses>
         <license>
@@ -22,6 +22,11 @@
             <id>amo</id>
             <name>Andy Moncsek</name>
             <email>amo.ahcp@gmail.com</email>
+        </developer>
+        <developer>
+            <id>Jotschi</id>
+            <name>Johannes Schüth</name>
+            <email>...@gmail.com</email>
         </developer>
     </developers>
     <scm>
@@ -136,6 +141,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <excludePackageNames>org.jacpfx.test.*</excludePackageNames>
+                </configuration>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -187,7 +195,7 @@
                     <artifactId>maven-gpg-plugin</artifactId>
                     <version>1.4</version>
                     <configuration>
-                        <skip>true</skip>
+                        <skip>false</skip>
                     </configuration>
                 </plugin>
             </plugins>

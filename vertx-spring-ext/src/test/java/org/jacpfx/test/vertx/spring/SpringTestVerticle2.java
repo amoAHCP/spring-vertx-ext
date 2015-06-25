@@ -1,12 +1,12 @@
-package org.jacpfx.vertx.spring;
+package org.jacpfx.test.vertx.spring;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.http.HttpServerOptions;
-
-import java.util.Map;
-
+import org.jacpfx.vertx.spring.SpringVerticle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Map;
 
 @Component
 @SpringVerticle(springConfig = TestConfiguration.class)
@@ -26,7 +26,7 @@ public class SpringTestVerticle2 extends AbstractVerticle {
             rc.response().putHeader("content-type", "text/plain");
             rc.response().end(sb.toString());
         }).listen();
-        vertx.deployVerticle("spring:org.jacpfx.vertx.spring.SpringTestVerticle2");
+        vertx.deployVerticle("spring:org.jacpfx.test.vertx.spring.SpringTestVerticle2");
         vertx.deployVerticle("org.jacpfx.vertx.spring.SimpleVerticle");
     }
 

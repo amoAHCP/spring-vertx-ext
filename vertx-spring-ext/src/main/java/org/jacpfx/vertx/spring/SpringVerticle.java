@@ -29,6 +29,7 @@ import java.lang.annotation.Target;
  * With this annotation you declare a Verticle as a spring verticle. Define the configuration class for each verticle.
  * You can also reuse spring configurations for different verticles. The autoremoveOtherSpringVerticles defines if you Spring verticle should be the only one in spring context.
  * If you set it to false the other Spring Verticles are simple Spring beans with references to Vertx context.
+ * @author Andy Moncsek , Johannes Schüth
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
@@ -37,11 +38,11 @@ public @interface SpringVerticle {
      * Defines the Spring Configuration class for the Spring Verticle
      * @return a Spring configuration class
      */
-    public Class<?> springConfig() default Object.class;
+    Class<?> springConfig() default Object.class;
 
     /**
      *  Defines if other Spring verticles in the same spring context will be removed.
      * @return true if other Spring verticles should be removed from current context
      */
-    public boolean autoremoveOtherSpringVerticles() default true;
+    boolean autoremoveOtherSpringVerticles() default true;
 }

@@ -1,12 +1,11 @@
-package org.jacpfx.vertx.spring;
+package org.jacpfx.test.vertx.spring;
 
 import io.vertx.core.Vertx;
 import io.vertx.test.core.VertxTestBase;
+import org.jacpfx.test.vertx.spring.factory.SpringTestVerticle;
+import org.junit.Test;
 
 import java.io.IOException;
-
-import org.jacpfx.vertx.spring.factory.SpringTestVerticle;
-import org.junit.Test;
 
 /**
  * Test whether deployment of a verticle works as expected.

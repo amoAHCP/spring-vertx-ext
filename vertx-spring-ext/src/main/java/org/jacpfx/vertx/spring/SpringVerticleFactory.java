@@ -24,20 +24,20 @@ package org.jacpfx.vertx.spring;
 import io.vertx.core.Verticle;
 import io.vertx.core.Vertx;
 import io.vertx.core.impl.verticle.CompilingClassLoader;
-import io.vertx.core.logging.Logger;
 import io.vertx.core.spi.VerticleFactory;
-
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 
 /**
  * A Vertx Spring factory that creates a spring verticle and loads for each verticle instance a spring context
+ * @author Andy Moncsek , Johannes Schüth
  *
  */
 public class SpringVerticleFactory implements VerticleFactory {
     private Vertx vertx;
 
     public static final String PREFIX = "java-spring";
+    public static final String SUFFIX = ".java";
 
     private static GenericApplicationContext parentContext = null;
 
@@ -53,25 +53,19 @@ public class SpringVerticleFactory implements VerticleFactory {
     }
 
     @Override
-    public synchronized Verticle createVerticle(String verticleName, ClassLoader classLoader) throws Exception {
-        verticleName = VerticleFactory.removePrefix(verticleName);
-        System.out.println("LOAD: " + verticleName + " in THREAD: " + Thread.currentThread() + "  in Factory:" + this);
-
-        String className = verticleName;
+    public synchronized Verticle createVerticle(final String verticleName, final ClassLoader classLoader) throws Exception {
+        final String className = VerticleFactory.removePrefix(verticleName);
         Class<?> clazz;
-
-        if (className.endsWith(".java")) {
+        if (className.endsWith(SUFFIX)) {
             CompilingClassLoader compilingLoader = new CompilingClassLoader(classLoader, className);
-            className = compilingLoader.resolveMainClassName();
-            clazz = compilingLoader.loadClass(className);
+            clazz = compilingLoader.loadClass(compilingLoader.resolveMainClassName());
         } else {
             clazz = classLoader.loadClass(className);
         }
-        Verticle verticle = createVerticle(clazz, classLoader);
-        return verticle;
+        return createVerticle(clazz, classLoader);
     }
 
-    public synchronized Verticle createVerticle(Class<?> clazz, ClassLoader classLoader) throws Exception {
+    private Verticle createVerticle(final Class<?> clazz, ClassLoader classLoader) throws Exception {
 
         if (clazz.isAnnotationPresent(SpringVerticle.class)) {
             return createSpringVerticle(clazz, classLoader);
@@ -86,7 +80,7 @@ public class SpringVerticleFactory implements VerticleFactory {
     }
 
     private Verticle createSpringVerticle(final Class<?> currentVerticleClass, ClassLoader classLoader) {
-        final SpringVerticle annotation = (SpringVerticle) currentVerticleClass.getAnnotation(SpringVerticle.class);
+        final SpringVerticle annotation = currentVerticleClass.getAnnotation(SpringVerticle.class);
         final Class<?> springConfigClass = annotation.springConfig();
         
         // Create the parent context  
@@ -116,14 +110,7 @@ public class SpringVerticleFactory implements VerticleFactory {
         return (Verticle) annotationConfigApplicationContext.getBeanFactory().getBean(currentVerticleClass.getSimpleName());
     }
 
-    public void reportException(Logger logger, Throwable t) {
-        logger.error("Exception in Spring verticle", t);
-    }
-
     public void close() {
     }
 
-    public static void setParentContext(GenericApplicationContext ctx) {
-        parentContext = ctx;
-    }
 }

@@ -34,6 +34,7 @@ import org.springframework.context.support.GenericApplicationContext;
 
 /**
  * This aspect closes the spring context in case the spring verticle is stopped
+ * @author Andy Moncsek
  */
 @Aspect
 public class VertxLifecycleAspect {

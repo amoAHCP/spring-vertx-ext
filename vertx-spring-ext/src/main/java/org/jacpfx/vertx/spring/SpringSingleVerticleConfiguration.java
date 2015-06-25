@@ -33,6 +33,7 @@ import java.util.List;
  * This should avoid missconfigurations because all other spring verticles in the context are not started as a verticle.
  * Each spring verticle creates his own spring context and must be deployed on it's own.
  * Created by Andy Moncsek on 12.03.14.
+ * @author Andy Moncsek
  */
 public class SpringSingleVerticleConfiguration implements BeanFactoryPostProcessor {
     private final Class<?> currentSpringVerticleClass;
@@ -48,14 +49,12 @@ public class SpringSingleVerticleConfiguration implements BeanFactoryPostProcess
     */
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
         // assume the annotation is present, otherwise hew would never call this
-        final SpringVerticle annotation = (SpringVerticle) currentSpringVerticleClass.getAnnotation(SpringVerticle.class);
+        final SpringVerticle annotation = currentSpringVerticleClass.getAnnotation(SpringVerticle.class);
         if (annotation.autoremoveOtherSpringVerticles()) {
             final String[] verticleBeanNames = beanFactory.getBeanNamesForAnnotation(SpringVerticle.class);
             if (verticleBeanNames.length > 1) {
                 final List<String> beansToRemove = getBeanNamesToRemove(verticleBeanNames, beanFactory);
-                for (final String name : beansToRemove) {
-                    ((BeanDefinitionRegistry) beanFactory).removeBeanDefinition(name);
-                }
+                beansToRemove.forEach(((BeanDefinitionRegistry) beanFactory)::removeBeanDefinition);
             }
         }
 

@@ -25,13 +25,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 /**
- * This Spring configuration adds a verticle lifecycle aspect to ensure that all spring verticle closes the spring context when undeployed.
+ * This Spring configuration adds a verticle lifecycle aspect to ensure that all spring verticle closes the spring context when un deployed.
+ * @author Andy Moncsek
  */
 @Configuration
 @EnableAspectJAutoProxy
 public class SpringContextConfiguration {
 
     @Bean
+    /**
+     * Returns the lifecycle aspect
+     */
     public VertxLifecycleAspect vertxLifecycleAspect() {
         return new VertxLifecycleAspect();
     }

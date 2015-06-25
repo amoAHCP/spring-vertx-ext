@@ -1,4 +1,4 @@
-package org.jacpfx.vertx.spring.factory;
+package org.jacpfx.test.vertx.spring.factory;
 
 import org.springframework.context.annotation.Scope;
 

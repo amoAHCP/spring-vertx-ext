@@ -1,4 +1,4 @@
-package org.jacpfx.vertx.spring;
+package org.jacpfx.test.vertx.spring;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

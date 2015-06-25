@@ -1,11 +1,11 @@
-package org.jacpfx.vertx.spring.factory;
+package org.jacpfx.test.vertx.spring.factory;
 
 import static org.junit.Assert.assertNotNull;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.http.HttpServerOptions;
 
 import org.jacpfx.vertx.spring.SpringVerticle;
-import org.jacpfx.vertx.spring.TestConfiguration;
+import org.jacpfx.test.vertx.spring.TestConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;

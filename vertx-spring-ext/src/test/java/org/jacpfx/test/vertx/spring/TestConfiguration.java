@@ -1,7 +1,7 @@
-package org.jacpfx.vertx.spring;
+package org.jacpfx.test.vertx.spring;
 
-import org.jacpfx.vertx.spring.factory.SpringTestVerticle;
-import org.jacpfx.vertx.spring.factory.TestService;
+import org.jacpfx.test.vertx.spring.factory.SpringTestVerticle;
+import org.jacpfx.test.vertx.spring.factory.TestService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

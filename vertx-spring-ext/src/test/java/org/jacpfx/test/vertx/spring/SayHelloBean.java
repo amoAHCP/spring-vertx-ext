@@ -1,4 +1,4 @@
-package org.jacpfx.vertx.spring;
+package org.jacpfx.test.vertx.spring;
 
 import org.springframework.stereotype.Component;
 

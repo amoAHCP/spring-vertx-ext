@@ -1,11 +1,12 @@
-package org.jacpfx.vertx.spring;
+package org.jacpfx.test.vertx.spring;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import io.vertx.core.Verticle;
 import io.vertx.core.Vertx;
 
-import org.jacpfx.vertx.spring.factory.SpringTestVerticle;
+import org.jacpfx.vertx.spring.SpringVerticleFactory;
+import org.jacpfx.test.vertx.spring.factory.SpringTestVerticle;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
