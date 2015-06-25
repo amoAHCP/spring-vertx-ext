@@ -21,7 +21,7 @@
 package org.jacpfx.vertx.spring;
 
 import io.vertx.core.logging.Logger;
-import io.vertx.core.logging.impl.LoggerFactory;
+import io.vertx.core.logging.LoggerFactory;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
