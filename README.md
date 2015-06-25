@@ -13,7 +13,6 @@ Add the spring-vertx-ext dependency to your project, in case of maven like this:
             <artifactId>vertx-spring-ext</artifactId>
             <version>2.0.0</version>
         </dependency>
-</pre>
  ```
 
 Version 2.0 uses Vert.X 3.0.0 and Spring 4.0.7.RELEASE
@@ -57,36 +56,35 @@ public class SpringVerticle extends AbstractVerticle {
 
 In case of using a spring-verticle as the initial verticle of your project, add the prefix "java-spring" to your vertex class.
 ```xml
- <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>2.3</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <transformers>
-                                <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <manifestEntries>
-                                        <Main-Class>io.vertx.core.Starter</Main-Class>
-                                        <Main-Verticle>java-spring:org.jacpfx.service.SpringVerticle</Main-Verticle>
-                                    </manifestEntries>
-                                </transformer>
-                                <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-                                    <resource>META-INF/services/io.vertx.core.spi.VerticleFactory</resource>
-                                </transformer>
-                            </transformers>
-
-                            <outputFile>${project.build.directory}/${artifactId}-${version}-fat.jar</outputFile>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>2.3</version>
+        <executions>
+            <execution>
+                <phase>package</phase>
+                    <goals>
+                        <goal>shade</goal>
+                    </goals>
+                    <configuration>
+                        <transformers>
+                            <transformer
+                                    implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                <manifestEntries>
+                                    <Main-Class>io.vertx.core.Starter</Main-Class>
+                                    <Main-Verticle>java-spring:org.jacpfx.service.SpringVerticle</Main-Verticle>
+                                </manifestEntries>
+                            </transformer>
+                            <transformer
+                                    implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                <resource>META-INF/services/io.vertx.core.spi.VerticleFactory</resource>
+                            </transformer>
+                        </transformers>
+                        <outputFile>${project.build.directory}/${artifactId}-${version}-fat.jar</outputFile>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
 
   ```
   
