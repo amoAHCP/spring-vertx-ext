@@ -113,4 +113,8 @@ public class SpringVerticleFactory implements VerticleFactory {
     public void close() {
     }
 
+    public static void setParentContext(GenericApplicationContext ctx) {
+        parentContext = ctx;
+    }
+
 }
