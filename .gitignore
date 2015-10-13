@@ -12,3 +12,5 @@ deploy.sh
 .classpath
 .project
 .settings
+.idea
+.vertx

@@ -1,10 +1,11 @@
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jacpfx.vertx.spring</groupId>
     <artifactId>vertx-spring-ext</artifactId>
     <packaging>jar</packaging>
-    <version>2.0.1-SNAPSHOT</version>
+    <version>2.0.1</version>
     <name>vertx-spring-ext</name>
     <url>https://github.com/amoAHCP/spring-vertx</url>
     <description>
@@ -36,12 +37,12 @@
     </scm>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.version>4.0.7.RELEASE</spring.version>
+        <spring.version>4.2.1.RELEASE</spring.version>
         <aspectj.version>1.7.4</aspectj.version>
         <maven.resources.plugin.version>2.6</maven.resources.plugin.version>
         <maven.failsafe.plugin.version>2.14</maven.failsafe.plugin.version>
         <maven.dependency.plugin.version>2.7</maven.dependency.plugin.version>
-        <vertx.version>3.0.0</vertx.version>
+        <vertx.version>3.1.0</vertx.version>
     </properties>
 
     <dependencies>
@@ -195,7 +196,7 @@
                     <artifactId>maven-gpg-plugin</artifactId>
                     <version>1.4</version>
                     <configuration>
-                        <skip>false</skip>
+                        <skip>true</skip>
                     </configuration>
                 </plugin>
             </plugins>
