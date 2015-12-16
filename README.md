@@ -11,11 +11,11 @@ Add the spring-vertx-ext dependency to your project, in case of maven like this:
         <dependency>
             <groupId>org.jacpfx.vertx.spring</groupId>
             <artifactId>vertx-spring-ext</artifactId>
-            <version>2.0.1</version>
+            <version>2.0.2</version>
         </dependency>
  ```
 
-Version 2.0.1 uses Vert.X 3.1.0 and Spring 4.2.1.RELEASE
+Version 2.0.2 uses Vert.X 3.2.0 and Spring 4.2.3.RELEASE
 
 
 
