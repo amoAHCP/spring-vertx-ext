@@ -25,6 +25,7 @@ import io.vertx.core.Verticle;
 import io.vertx.core.Vertx;
 import io.vertx.core.impl.verticle.CompilingClassLoader;
 import io.vertx.core.spi.VerticleFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 
@@ -40,6 +41,7 @@ public class SpringVerticleFactory implements VerticleFactory {
     public static final String SUFFIX = ".java";
 
     private static GenericApplicationContext parentContext = null;
+	private static ApplicationContext applicationContext = null;
 
     @Override
     public String prefix() {
@@ -92,22 +94,33 @@ public class SpringVerticleFactory implements VerticleFactory {
         genericApplicationContext.refresh();
         genericApplicationContext.start();
 
-        // 1. Create a new context for each verticle and use the specified spring configuration class if possible
-        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext();
-        annotationConfigApplicationContext.setParent(genericApplicationContext);
-        annotationConfigApplicationContext.register(SpringContextConfiguration.class, springConfigClass);
+		AnnotationConfigApplicationContext annotationConfigApplicationContext = null;
 
-        // 2. Register a bean definition for this verticle
-        annotationConfigApplicationContext.registerBeanDefinition(currentVerticleClass.getSimpleName(), new VerticleBeanDefinition(currentVerticleClass));
-        
-        // 3. Add a bean factory post processor to avoid configuration issues
-        annotationConfigApplicationContext.addBeanFactoryPostProcessor(new SpringSingleVerticleConfiguration(currentVerticleClass));
-        annotationConfigApplicationContext.refresh();
-        annotationConfigApplicationContext.start();
-        annotationConfigApplicationContext.registerShutdownHook();
-        
-        // 5. Return the verticle by fetching the bean from the context
-        return (Verticle) annotationConfigApplicationContext.getBeanFactory().getBean(currentVerticleClass.getSimpleName());
+		if (applicationContext!=null) {
+			// 1. Use a pre-defined Spring context
+			// If you use applicationContext then you must control parentContext
+			annotationConfigApplicationContext = (AnnotationConfigApplicationContext) applicationContext;
+		} else {
+			// 1. Or Create a new context for each verticle and use the specified spring configuration class if possible
+			annotationConfigApplicationContext = new AnnotationConfigApplicationContext();
+			annotationConfigApplicationContext.setParent(genericApplicationContext);
+			annotationConfigApplicationContext.register(SpringContextConfiguration.class, springConfigClass);
+		}
+
+		// 2. Register a bean definition for this verticle
+		annotationConfigApplicationContext.registerBeanDefinition(currentVerticleClass.getSimpleName(), new VerticleBeanDefinition(currentVerticleClass));
+
+		// 3. Add a bean factory post processor to avoid configuration issues
+		annotationConfigApplicationContext.addBeanFactoryPostProcessor(new SpringSingleVerticleConfiguration(currentVerticleClass));
+		if (applicationContext==null) {
+			annotationConfigApplicationContext.refresh();
+		}
+		annotationConfigApplicationContext.start();
+		annotationConfigApplicationContext.registerShutdownHook();
+
+		return (Verticle) annotationConfigApplicationContext.getBeanFactory().getBean(currentVerticleClass.getSimpleName());
+
+
     }
 
     public void close() {
@@ -116,5 +129,9 @@ public class SpringVerticleFactory implements VerticleFactory {
     public static void setParentContext(GenericApplicationContext ctx) {
         parentContext = ctx;
     }
+
+	public static void setApplicationContext(ApplicationContext ctx) {
+		applicationContext = ctx;
+	}
 
 }
