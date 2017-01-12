@@ -44,8 +44,7 @@ public class SpringVerticleFactoryTest {
     }
 
     private SpringVerticleFactory createCleanSpringVerticleFactory() {
-        SpringVerticleFactory springVerticleFactory = new SpringVerticleFactory();
-        return springVerticleFactory;
+        return new SpringVerticleFactory();
     }
 
 }
