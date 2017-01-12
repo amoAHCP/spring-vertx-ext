@@ -15,7 +15,7 @@ Add the spring-vertx-ext dependency to your project, in case of maven like this:
         </dependency>
  ```
 
-Version 2.0.3 uses Vert.X 3.3.2 and Spring 4.3.1.RELEASE
+Version 2.0.4 uses Vert.X 3.3.3 and Spring 4.3.5.RELEASE
 
 
 
