@@ -97,10 +97,13 @@ public class SpringVerticleFactory implements VerticleFactory {
         annotationConfigApplicationContext.setParent(genericApplicationContext);
         annotationConfigApplicationContext.register(SpringContextConfiguration.class, springConfigClass);
 
-        // 2. Register a bean definition for this verticle
+        // 2. Register the Vertx instance as a singleton in spring context
+        annotationConfigApplicationContext.getBeanFactory().registerSingleton(vertx.getClass().getSimpleName(), vertx);
+
+        // 3. Register a bean definition for this verticle
         annotationConfigApplicationContext.registerBeanDefinition(currentVerticleClass.getSimpleName(), new VerticleBeanDefinition(currentVerticleClass));
         
-        // 3. Add a bean factory post processor to avoid configuration issues
+        // 4. Add a bean factory post processor to avoid configuration issues
         annotationConfigApplicationContext.addBeanFactoryPostProcessor(new SpringSingleVerticleConfiguration(currentVerticleClass));
         annotationConfigApplicationContext.refresh();
         annotationConfigApplicationContext.start();

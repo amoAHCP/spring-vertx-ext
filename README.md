@@ -1,6 +1,9 @@
 spring-vertx-ext
 ================
 
+## changes in 2.1
+You can now inject the Vertx instance to your beans
+
 A spring vertx extension which creates spring aware verticles. This extension creates for each spring aware Verticle an own spring context.
 Spring Verticles can deploy "normal" Verticles and vice versa.
 > You should use Spring-Verticles in „worker mode“ or use vertx.executeBlocking when calling blocking methods. Avoid blocking the event loop!
@@ -11,11 +14,11 @@ Add the spring-vertx-ext dependency to your project, in case of maven like this:
         <dependency>
             <groupId>org.jacpfx.vertx.spring</groupId>
             <artifactId>vertx-spring-ext</artifactId>
-            <version>2.0.3</version>
+            <version>2.1</version>
         </dependency>
  ```
 
-Version 2.0.4 uses Vert.X 3.3.3 and Spring 4.3.5.RELEASE
+Version 2.1 uses Vert.X 3.3.3 and Spring 4.3.5.RELEASE
 
 
 
@@ -50,7 +53,16 @@ public class SpringVerticle extends AbstractVerticle {
 }
 
  ```
+To access the Vertx instance in your spring beans, you can inject it by using autowiring :
+```java
 
+@Component
+public class MyService {
+  @Autowired 
+  private Vertx vertx;
+  ...
+}
+ ```
 
 ## deployment ##
 
