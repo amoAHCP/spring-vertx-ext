@@ -8,7 +8,7 @@ A spring vertx extension which creates spring aware verticles. This extension cr
 Spring Verticles can deploy "normal" Verticles and vice versa.
 > You should use Spring-Verticles in „worker mode“ or use vertx.executeBlocking when calling blocking methods. Avoid blocking the event loop!
 
-##Usage:##
+## Usage
 Add the spring-vertx-ext dependency to your project, in case of maven like this:
 ```xml
         <dependency>
