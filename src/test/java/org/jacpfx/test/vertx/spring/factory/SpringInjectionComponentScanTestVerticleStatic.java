@@ -1,19 +1,20 @@
 package org.jacpfx.test.vertx.spring.factory;
 
+import static org.junit.Assert.assertNotNull;
+
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.http.HttpServerOptions;
-import org.jacpfx.test.vertx.spring.InjectionTestConfiguration;
+import org.jacpfx.test.vertx.spring.SayHelloBean;
 import org.jacpfx.test.vertx.spring.TestConfiguration;
 import org.jacpfx.vertx.spring.SpringVerticle;
+import org.jacpfx.vertx.spring.SpringVerticleFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import static org.junit.Assert.assertNotNull;
-
 @Component
-@SpringVerticle(springConfig = InjectionTestConfiguration.class)
-public class SpringInjectionTestVerticle extends AbstractVerticle {
+@SpringVerticle(springConfig = TestConfiguration.class)
+public class SpringInjectionComponentScanTestVerticleStatic extends AbstractVerticle {
 
     @Autowired
     private InjectionTestService bean;
@@ -21,12 +22,19 @@ public class SpringInjectionTestVerticle extends AbstractVerticle {
     @Autowired
     public ApplicationContext context;
 
+    @Autowired
+    private SayHelloBean sayHello;
+
+
     @Override
     public void start() {
+        SpringVerticleFactory.initSpring(this);
         System.out.println("Started");
         assertNotNull(bean);
         assertNotNull(bean.vertx());
         assertNotNull(vertx);
+        assertNotNull(sayHello);
+        System.out.println(sayHello.sayHello());
         System.out.println("injected: "+ bean+" "+context);
 
         vertx.createHttpServer(new HttpServerOptions().setPort(8089)).requestHandler(rc -> {

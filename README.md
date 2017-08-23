@@ -1,10 +1,34 @@
 spring-vertx-ext
 ================
 
+## changes in 2.2 (SNAPSHOT)
+- Update Vert.x to version 3.5.0.Beta1
+- Update Spring to version 5.0.0.RC3
+- Update AspectJ to version 1.8.10
+- New: Static initializer to create a Spring-aware Verticle without using the Vert.x Factory mechanism. This means you can skip the maven-shade configuration or adding the "java-spring" prefix while deploying a verticle. This change will not affect the existing mechanism.
+  - Usage:  
+  ```java
+  @Component
+  @SpringVerticle(springConfig = TestConfiguration.class)
+  public class SpringInjectionComponentScanTestVerticle extends AbstractVerticle {
+  
+      @Autowired
+      private SayHelloBean sayHello;
+  
+      @Override
+      public void start() {
+          SpringVerticleFactory.initSpring(this);
+          assertNotNull(bean);
+         
+      }
+  }
+   ```
+
 ## changes in 2.1
 You can now inject the Vertx instance to your beans
 
-A spring vertx extension which creates spring aware verticles. This extension creates for each spring aware Verticle an own spring context.
+## What it is
+A spring-vertx extension which creates spring aware verticles. This extension creates for each spring aware Verticle an own spring context.
 Spring Verticles can deploy "normal" Verticles and vice versa.
 > You should use Spring-Verticles in „worker mode“ or use vertx.executeBlocking when calling blocking methods. Avoid blocking the event loop!
 
