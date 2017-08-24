@@ -13,7 +13,7 @@ spring-vertx-ext
   public class SpringInjectionComponentScanTestVerticle extends AbstractVerticle {
   
       @Autowired
-      private SayHelloBean sayHello;
+      private SayHelloBean bean;
   
       @Override
       public void start() {

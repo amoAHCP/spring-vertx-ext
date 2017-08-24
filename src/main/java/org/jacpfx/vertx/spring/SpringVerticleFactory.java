@@ -1,6 +1,6 @@
 
 /*
- * Copyright (C) 2014
+ * Copyright (C) 2017
  *
  * [SpringVerticleFactory.java]
  * vertx-spring-mod (https://github.com/amoAHCP/spring-vertx-mod)
@@ -40,8 +40,6 @@ public class SpringVerticleFactory implements VerticleFactory {
 
     public static final String PREFIX = "java-spring";
     public static final String SUFFIX = ".java";
-
-    private static GenericApplicationContext parentContext = null;
 
     @Override
     public String prefix() {
@@ -86,13 +84,8 @@ public class SpringVerticleFactory implements VerticleFactory {
         final Class<?> springConfigClass = annotation.springConfig();
         
         // Create the parent context  
-        final GenericApplicationContext genericApplicationContext = new GenericApplicationContext();
-        genericApplicationContext.setClassLoader(classLoader);
-        if (parentContext != null) {
-            genericApplicationContext.setParent(parentContext);
-        }
-        genericApplicationContext.refresh();
-        genericApplicationContext.start();
+        final GenericApplicationContext genericApplicationContext = getGenericApplicationContext(
+            classLoader);
 
         // 1. Create a new context for each verticle and use the specified spring configuration class if possible
         AnnotationConfigApplicationContext annotationConfigApplicationContext = getAnnotationConfigApplicationContext(
@@ -112,6 +105,8 @@ public class SpringVerticleFactory implements VerticleFactory {
     }
 
 
+
+
     /**
      * Initialize a Spring Context for given Verticle instance. A Verticle MUST be annotated with {@link SpringVerticle}
      * @param verticle The Verticle Instance where to start the Spring Context
@@ -126,13 +121,8 @@ public class SpringVerticleFactory implements VerticleFactory {
         final Class<?> springConfigClass = annotation.springConfig();
 
         // Create the parent context
-        final GenericApplicationContext genericApplicationContext = new GenericApplicationContext();
-        genericApplicationContext.setClassLoader(vertx.getClass().getClassLoader());
-        if (parentContext != null) {
-            genericApplicationContext.setParent(parentContext);
-        }
-        genericApplicationContext.refresh();
-        genericApplicationContext.start();
+        final GenericApplicationContext genericApplicationContext = getGenericApplicationContext(
+            vertx.getClass().getClassLoader());
 
         // 1. Create a new context for each verticle and use the specified spring configuration class if possible
         AnnotationConfigApplicationContext annotationConfigApplicationContext = getAnnotationConfigApplicationContext(
@@ -168,11 +158,16 @@ public class SpringVerticleFactory implements VerticleFactory {
         return annotationConfigApplicationContext;
     }
 
+    private static GenericApplicationContext getGenericApplicationContext(ClassLoader classLoader) {
+        final GenericApplicationContext genericApplicationContext = new GenericApplicationContext();
+        genericApplicationContext.setClassLoader(classLoader);
+        genericApplicationContext.refresh();
+        genericApplicationContext.start();
+        return genericApplicationContext;
+    }
+
     public void close() {
     }
 
-    public static void setParentContext(GenericApplicationContext ctx) {
-        parentContext = ctx;
-    }
 
 }
