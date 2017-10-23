@@ -5,7 +5,7 @@
   <groupId>org.jacpfx.vertx.spring</groupId>
   <artifactId>vertx-spring-ext</artifactId>
   <packaging>jar</packaging>
-  <version>2.2-SNAPSHOT</version>
+  <version>2.2</version>
   <name>vertx-spring-ext</name>
   <url>https://github.com/amoAHCP/spring-vertx</url>
   <description>
@@ -38,12 +38,12 @@
   </scm>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <spring.version>5.0.0.RC3</spring.version>
+    <spring.version>5.0.0.RELEASE</spring.version>
     <aspectj.version>1.8.10</aspectj.version>
     <maven.resources.plugin.version>2.6</maven.resources.plugin.version>
     <maven.failsafe.plugin.version>2.14</maven.failsafe.plugin.version>
     <maven.dependency.plugin.version>2.7</maven.dependency.plugin.version>
-    <vertx.version>3.5.0.Beta1</vertx.version>
+    <vertx.version>3.5.0</vertx.version>
   </properties>
 
   <dependencies>

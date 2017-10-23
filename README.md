@@ -1,9 +1,9 @@
 spring-vertx-ext
 ================
 
-## changes in 2.2 (SNAPSHOT)
-- Update Vert.x to version 3.5.0.Beta1
-- Update Spring to version 5.0.0.RC3
+## changes in 2.2 
+- Update Vert.x to version 3.5.0
+- Update Spring to version 5.0.0.RELEASE
 - Update AspectJ to version 1.8.10
 - New: Static initializer to create a Spring-aware Verticle without using the Vert.x Factory mechanism. This means you can skip the maven-shade configuration or adding the "java-spring" prefix while deploying a verticle. This change will not affect the existing mechanism.
   - Usage:  
@@ -23,7 +23,6 @@ spring-vertx-ext
       }
   }
    ```
-
 ## changes in 2.1
 You can now inject the Vertx instance to your beans
 
@@ -38,7 +37,7 @@ Add the spring-vertx-ext dependency to your project, in case of maven like this:
         <dependency>
             <groupId>org.jacpfx.vertx.spring</groupId>
             <artifactId>vertx-spring-ext</artifactId>
-            <version>2.1</version>
+            <version>2.2</version>
         </dependency>
  ```
 
