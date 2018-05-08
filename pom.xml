@@ -4,8 +4,8 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jacpfx.vertx.spring</groupId>
   <artifactId>vertx-spring-ext</artifactId>
+  <version>2.3</version>
   <packaging>jar</packaging>
-  <version>2.2</version>
   <name>vertx-spring-ext</name>
   <url>https://github.com/amoAHCP/spring-vertx</url>
   <description>
@@ -36,15 +36,63 @@
     <developerConnection>scm:git:git@github.com:amoAHCP/spring-vertx.git</developerConnection>
     <url>git@github.com:amoAHCP/spring-vertx.git</url>
   </scm>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <spring.version>5.0.0.RELEASE</spring.version>
+    <spring.version>5.0.5.RELEASE</spring.version>
     <aspectj.version>1.8.10</aspectj.version>
     <maven.resources.plugin.version>2.6</maven.resources.plugin.version>
     <maven.failsafe.plugin.version>2.14</maven.failsafe.plugin.version>
     <maven.dependency.plugin.version>2.7</maven.dependency.plugin.version>
-    <vertx.version>3.5.0</vertx.version>
+    <vertx.version>3.5.1</vertx.version>
+    <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
   </properties>
+  <profiles>
+
+    <profile>
+      <id>java-9</id>
+      <activation>
+        <jdk>9</jdk>
+      </activation>
+
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>${maven-compiler-plugin.version}</version>
+            <configuration>
+              <source>9</source>
+              <target>9</target>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>java-8</id>
+      <activation>
+        <jdk>1.8</jdk>
+      </activation>
+
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>${maven-compiler-plugin.version}</version>
+            <configuration>
+              <excludes>
+                <exclude>**/module-info.java</exclude>
+              </excludes>
+              <source>1.8</source>
+              <target>1.8</target>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
   <dependencies>
     <dependency>
@@ -86,11 +134,11 @@
     </dependency>
 
     <!-- Test dependencies -->
+
     <dependency>
       <groupId>io.vertx</groupId>
-      <artifactId>vertx-core</artifactId>
+      <artifactId>vertx-unit</artifactId>
       <version>${vertx.version}</version>
-      <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -118,15 +166,10 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+
   <build>
     <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-        </configuration>
-      </plugin>
       <plugin>
         <!-- create source jar -->
         <groupId>org.apache.maven.plugins</groupId>
@@ -177,20 +220,11 @@
       <plugins>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.1</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.7.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-jar-plugin</artifactId>
-          <version>2.3.2</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-javadoc-plugin</artifactId>
-          <version>2.9.1</version>
+          <version>3.7.0</version>
+          <configuration>
+            <source>9</source>
+            <target>9</target>
+          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>

@@ -1,15 +1,14 @@
 package org.jacpfx.test.vertx.spring;
 
+
 import io.vertx.core.Vertx;
-import io.vertx.test.core.VertxTestBase;
-import org.jacpfx.test.vertx.spring.factory.SpringInjectionComponentScanTestVerticle;
-import org.jacpfx.test.vertx.spring.factory.SpringInjectionComponentScanTestVerticleStatic;
-import org.jacpfx.test.vertx.spring.factory.SpringInjectionTestVerticle;
-import org.jacpfx.test.vertx.spring.factory.SpringInjectionTestVerticleStatic;
-import org.jacpfx.test.vertx.spring.factory.SpringTestVerticle;
+import io.vertx.ext.unit.Async;
+import io.vertx.ext.unit.TestContext;
+import io.vertx.ext.unit.junit.VertxUnitRunner;
 import org.junit.Test;
 
 import java.io.IOException;
+import org.junit.runner.RunWith;
 
 /**
  * Test whether deployment of a verticle works as expected.
@@ -17,24 +16,26 @@ import java.io.IOException;
  * @author johannes2
  *
  */
-public class InjectionTest extends VertxTestBase {
+@RunWith(VertxUnitRunner.class)
+public class InjectionTest  {
 
     /**
      * Deploy and undeploy a verticle
      * @throws IOException
      */
     @Test
-    public void testDeployment() throws IOException {
+    public void testDeployment(TestContext tc) throws IOException {
+        Async async = tc.async();
         Vertx vertx = Vertx.vertx();
         vertx.deployVerticle("java-spring:" + SpringInjectionTestVerticle.class.getCanonicalName(), ch -> {
-            assertTrue(ch.succeeded());
-            assertNotNull(ch.result());
+            tc.assertTrue(ch.succeeded());
+            tc.assertNotNull(ch.result());
             vertx.undeploy(ch.result(), chu -> {
-                assertTrue(chu.succeeded());
-                testComplete();
+                tc.assertTrue(chu.succeeded());
+                async.complete();
             });
         });
-        await();
+        async.await();
     }
 
     /**
@@ -42,17 +43,18 @@ public class InjectionTest extends VertxTestBase {
      * @throws IOException
      */
     @Test
-    public void testDeploymentComponentScan() throws IOException {
+    public void testDeploymentComponentScan(TestContext tc) throws IOException {
+        Async async = tc.async();
         Vertx vertx = Vertx.vertx();
         vertx.deployVerticle("java-spring:" + SpringInjectionComponentScanTestVerticle.class.getCanonicalName(), ch -> {
-            assertTrue(ch.succeeded());
-            assertNotNull(ch.result());
+            tc.assertTrue(ch.succeeded());
+            tc.assertNotNull(ch.result());
             vertx.undeploy(ch.result(), chu -> {
-                assertTrue(chu.succeeded());
-                testComplete();
+                tc.assertTrue(chu.succeeded());
+                async.complete();
             });
         });
-        await();
+        async.await();
     }
 
 
@@ -61,17 +63,18 @@ public class InjectionTest extends VertxTestBase {
      * @throws IOException
      */
     @Test
-    public void testStaticDeployment() throws IOException {
+    public void testStaticDeployment(TestContext tc) throws IOException {
+        Async async = tc.async();
         Vertx vertx = Vertx.vertx();
         vertx.deployVerticle(SpringInjectionTestVerticleStatic.class.getCanonicalName(), ch -> {
-            assertTrue(ch.succeeded());
-            assertNotNull(ch.result());
+            tc.assertTrue(ch.succeeded());
+            tc.assertNotNull(ch.result());
             vertx.undeploy(ch.result(), chu -> {
-                assertTrue(chu.succeeded());
-                testComplete();
+                tc.assertTrue(chu.succeeded());
+                async.complete();
             });
         });
-        await();
+        async.await();
     }
 
     /**
@@ -79,16 +82,17 @@ public class InjectionTest extends VertxTestBase {
      * @throws IOException
      */
     @Test
-    public void testStaticDeploymentComponentScan() throws IOException {
+    public void testStaticDeploymentComponentScan(TestContext tc) throws IOException {
+        Async async = tc.async();
         Vertx vertx = Vertx.vertx();
         vertx.deployVerticle(SpringInjectionComponentScanTestVerticleStatic.class.getCanonicalName(), ch -> {
-            assertTrue(ch.succeeded());
-            assertNotNull(ch.result());
+            tc.assertTrue(ch.succeeded());
+            tc.assertNotNull(ch.result());
             vertx.undeploy(ch.result(), chu -> {
-                assertTrue(chu.succeeded());
-                testComplete();
+                tc.assertTrue(chu.succeeded());
+                async.complete();
             });
         });
-        await();
+        async.await();
     }
 }

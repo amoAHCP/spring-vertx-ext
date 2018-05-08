@@ -1,19 +1,17 @@
-package org.jacpfx.test.vertx.spring.factory;
-
-import static org.junit.Assert.assertNotNull;
+package org.jacpfx.test.vertx.spring;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.http.HttpServerOptions;
-import org.jacpfx.test.vertx.spring.InjectionTestConfiguration;
 import org.jacpfx.vertx.spring.SpringVerticle;
-import org.jacpfx.vertx.spring.SpringVerticleFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
+import static org.junit.Assert.assertNotNull;
+
 @Component
 @SpringVerticle(springConfig = InjectionTestConfiguration.class)
-public class SpringInjectionTestVerticleStatic extends AbstractVerticle {
+public class SpringInjectionTestVerticle extends AbstractVerticle {
 
     @Autowired
     private InjectionTestService bean;
@@ -23,7 +21,6 @@ public class SpringInjectionTestVerticleStatic extends AbstractVerticle {
 
     @Override
     public void start() {
-        SpringVerticleFactory.initSpring(this);
         System.out.println("Started");
         assertNotNull(bean);
         assertNotNull(bean.vertx());

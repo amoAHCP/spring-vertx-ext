@@ -6,7 +6,6 @@ import io.vertx.core.Verticle;
 import io.vertx.core.Vertx;
 
 import org.jacpfx.vertx.spring.SpringVerticleFactory;
-import org.jacpfx.test.vertx.spring.factory.SpringTestVerticle;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

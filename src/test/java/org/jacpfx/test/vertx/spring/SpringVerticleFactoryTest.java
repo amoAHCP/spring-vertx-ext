@@ -1,4 +1,4 @@
-package org.jacpfx.test.vertx.spring.factory;
+package org.jacpfx.test.vertx.spring;
 
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;

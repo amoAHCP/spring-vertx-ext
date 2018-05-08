@@ -1,4 +1,4 @@
-package org.jacpfx.test.vertx.spring.factory;
+package org.jacpfx.test.vertx.spring;
 
 import io.vertx.core.Vertx;
 import org.springframework.beans.factory.annotation.Autowired;
