@@ -9,6 +9,5 @@ module jacpfx.vertx.spring {
   requires spring.beans;
   requires aspectjrt;
 
-
   exports org.jacpfx.vertx.spring;
 }
