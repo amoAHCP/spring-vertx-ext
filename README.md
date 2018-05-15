@@ -1,6 +1,36 @@
 spring-vertx-ext
 ================
 
+## changes in 2.3 
+- migrated to Java 9, spring-vertx-ext will be available as Java 9 module in maven central as Java 9 only (java 8 Version will follow, you can still compile it with Java 8)
+- the module name is **jacpfx.vertx.spring** (be aware to include spring dependencies, like "requires spring.context;" )
+- Update Vert.x to version 3.5.1
+- Update Spring to version 5.0.5.RELEASE
+
+### Usage
+Add the spring-vertx-ext dependency to your project, in case of maven like this:
+```xml
+        <dependency>
+            <groupId>org.jacpfx.vertx.spring</groupId>
+            <artifactId>vertx-spring-ext</artifactId>
+            <version>2.3</version>
+        </dependency>
+ ```
+
+```java
+module vxms.spring.demo {
+  requires vxms.core;
+  requires spring.context;
+  requires jacpfx.vertx.spring;
+  requires java.logging;
+  requires java.management;
+  requires java.ws.rs;
+  requires javax.inject;
+  requires io.netty.codec.http;
+
+}
+ ```
+
 ## changes in 2.2 
 - Update Vert.x to version 3.5.0
 - Update Spring to version 5.0.0.RELEASE
