@@ -1,6 +1,11 @@
 spring-vertx-ext
 ================
+## changes in 2.4 
+- update spring to 5.1.6.RELEASE
+- update aspectj to 1.9.2
+- update Vert.x to 3.7.0
 
+regular dependency is for Java >=9 (``` <artifactId>vertx-spring-ext</artifactId> ```) and a new artifact for Java8 was published with 2.4 (``` <artifactId>vertx-spring-ext-8</artifactId> ```)
 ## changes in 2.3 
 - migrated to Java 9, spring-vertx-ext will be available as Java 9 module in maven central as Java 9 only (java 8 Version will follow, you can still compile it with Java 8)
 - the module name is **jacpfx.vertx.spring** (be aware to include spring dependencies, like "requires spring.context;" )
